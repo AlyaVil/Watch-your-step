@@ -1,0 +1,62 @@
+int nbTilesW = 30, nbTilesH = 30;
+float gapW = 4, gapH = 4;
+final static float TILE_WIDTH = 35;
+float tileW = TILE_WIDTH, tileH = TILE_WIDTH;
+float totalW, totalH;
+Tile[][] tiles;
+Boolean enabled = true;
+
+char myKey;
+
+void setup()
+{
+  size(800, 500, P3D);
+  rectMode(CENTER);
+  strokeWeight(2);
+  stroke(0);
+  fill(60);
+
+  initialize();
+}
+
+void initialize()
+{
+  totalW = (tileW + gapW) * nbTilesW - gapW;
+  totalH = (tileH + gapH) * nbTilesH - gapH;
+  tiles = new Tile[nbTilesW][nbTilesH];
+  for (int i = 0; i < nbTilesW; i++)
+  {
+    for (int j = 0; j < nbTilesH; j++)
+    {
+      tiles[i][j] = new Tile(i*(tileW + gapW)-totalW/2, map(j, 0, nbTilesH, 0, totalH)-totalH/2, i, j);
+    }
+  }
+}
+
+void draw()
+{
+  lights();
+  if (myKey == CODED)
+  {
+    switch(keyCode)
+    {
+    case UP:
+      tileH+=2;
+      initialize();
+      break;
+    case DOWN:
+      tileH-=2;
+      initialize();
+      break;
+    case RIGHT:
+      tileW+=2;
+      initialize();
+      break;
+    case LEFT:
+      tileW-=2;
+      initialize();
+      break;
+    case SHIFT:
+      enabled = !enabled;
+      break;
+    }
