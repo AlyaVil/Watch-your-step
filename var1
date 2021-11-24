@@ -60,3 +60,37 @@ void draw()
       enabled = !enabled;
       break;
     }
+    tileW = constrain(tileW, 15, width/2);
+    tileH = constrain(tileH, 15, height/2);
+  } else if (myKey == ENTER || myKey == RETURN) 
+  {
+    tileW = tileH = TILE_WIDTH;
+    initialize();
+  } 
+  myKey = char(0);
+
+  background(160);
+  translate(width/2, height/2);
+  PVector strength = new PVector(mouseX-pmouseX, mouseY-pmouseY);
+  for (int i = 0; i < nbTilesW; i++)
+  {
+    for (int j = 0; j < nbTilesH; j++)
+    {
+      tiles[i][j].process(mouseX, mouseY, strength);
+    }
+  }
+  for (int i = 0; i < nbTilesW; i++)
+  {
+    for (int j = 0; j < nbTilesH; j++)
+    {
+      tiles[i][j].display();
+    }
+  }
+}
+
+void keyPressed()
+{
+  //make sure that keys are taken into account BEFORE a loop starts
+  myKey = key;
+}
+
